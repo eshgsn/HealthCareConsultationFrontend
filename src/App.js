@@ -1,11 +1,12 @@
 
 
+// App.js
 // import React, { useState } from 'react';
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import Router
+// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import './components/FormStyles.css';
 // import RegistrationForm from './components/RegistrationForm';
 // import LoginForm from './components/LoginForm';
-// import Dashboard from './components/Dashboard'; // Import Dashboard component
+// import Dashboard from './components/Dashboard';
 
 // function App() {
 //   const [isLogin, setIsLogin] = useState(true);
@@ -18,18 +19,19 @@
 //   return (
 //     <Router>
 //       <div className="App">
-//         <Routes>
-//           <Route path="/" element={
-//             <>
-//               <div className="toggle-container" onClick={toggleSwitch}>
-//                 <div className={`toggle-btn ${isLogin ? 'left' : 'right'}`}>
-//                   {isLogin ? 'Login' : 'Register'}
-//                 </div>
-//                 <div className="toggle-label left">Login</div>
-//                 <div className="toggle-label right">Register</div>
-//               </div>
+//         <div className="toggle-container" onClick={toggleSwitch}>
+//           <div className={`toggle-btn ${isLogin ? 'left' : 'right'}`}>
+//             {isLogin ? 'Login' : 'Register'}
+//           </div>
+//           <div className="toggle-label left">Login</div>
+//           <div className="toggle-label right">Register</div>
+//         </div>
 
-//               {isLogin ? (
+//         <Routes>
+//           <Route
+//             path="/"
+//             element={
+//               isLogin ? (
 //                 <LoginForm />
 //               ) : (
 //                 <div>
@@ -43,9 +45,9 @@
 //                   </select>
 //                   <RegistrationForm role={role} />
 //                 </div>
-//               )}
-//             </>
-//           } />
+//               )
+//             }
+//           />
 //           <Route path="/dashboard" element={<Dashboard />} />
 //         </Routes>
 //       </div>
@@ -57,10 +59,9 @@
 
 
 
-
 // App.js
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import './components/FormStyles.css';
 import RegistrationForm from './components/RegistrationForm';
 import LoginForm from './components/LoginForm';
@@ -69,28 +70,35 @@ import Dashboard from './components/Dashboard';
 function App() {
   const [isLogin, setIsLogin] = useState(true);
   const [role, setRole] = useState('patient');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const toggleSwitch = () => {
     setIsLogin(!isLogin);
   };
 
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+  };
+
   return (
     <Router>
       <div className="App">
-        <div className="toggle-container" onClick={toggleSwitch}>
-          <div className={`toggle-btn ${isLogin ? 'left' : 'right'}`}>
-            {isLogin ? 'Login' : 'Register'}
+        {!isAuthenticated && (
+          <div className="toggle-container" onClick={toggleSwitch}>
+            <div className={`toggle-btn ${isLogin ? 'left' : 'right'}`}>
+              {isLogin ? 'Login' : 'Register'}
+            </div>
+            <div className="toggle-label left">Login</div>
+            <div className="toggle-label right">Register</div>
           </div>
-          <div className="toggle-label left">Login</div>
-          <div className="toggle-label right">Register</div>
-        </div>
+        )}
 
         <Routes>
           <Route
             path="/"
             element={
               isLogin ? (
-                <LoginForm />
+                <LoginForm onLogin={handleLogin} />
               ) : (
                 <div>
                   <select
@@ -114,3 +122,4 @@ function App() {
 }
 
 export default App;
+

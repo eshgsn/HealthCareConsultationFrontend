@@ -1,4 +1,4 @@
-/* DashboardStyles.css */
+/* DashboardStyles.css
 .dashboard {
     padding: 20px;
   }
@@ -30,4 +30,49 @@
   .consult-btn:hover {
     background-color: darkblue;
   }
-  
+   */
+
+/* DashboardStyles.css */
+.dashboard {
+  padding: 20px;
+}
+
+.list-container {
+  background-color: rgba(75, 145, 226, 0.596);; 
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 15px;
+  width: 1000px; 
+  /* max-width: 1000px;  */
+  margin-left: auto;
+  margin-right: auto; 
+}
+
+.list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 10px 20px; /* Adjust padding to maintain list item size */
+  width: 95%; /* Ensures each list item takes full width of the container */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.consult-btn {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.consult-btn:hover {
+  background-color: rgb(2, 117, 2);
+}
