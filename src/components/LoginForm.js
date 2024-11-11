@@ -24,9 +24,12 @@ function LoginForm({ onLogin }) {
 
     try {
       const response = await axios.post(apiUrl, { email, password });
+      console.log(response)
       if (response.status === 200) {
         setSuccess('Login successful!');
         onLogin();
+        localStorage.setItem('patient_id', response.data.id)
+        localStorage.setItem('token', response.data.token)
         navigate('/dashboard', { state: { role, token: response.data.token } });
       }
     } catch (error) {
