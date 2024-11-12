@@ -1,38 +1,47 @@
 
 
-// App.js
+
+// // App.js
 // import React, { useState } from 'react';
-// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 // import './components/FormStyles.css';
 // import RegistrationForm from './components/RegistrationForm';
 // import LoginForm from './components/LoginForm';
 // import Dashboard from './components/Dashboard';
 
+
 // function App() {
 //   const [isLogin, setIsLogin] = useState(true);
 //   const [role, setRole] = useState('patient');
+//   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
 //   const toggleSwitch = () => {
 //     setIsLogin(!isLogin);
 //   };
 
+//   const handleLogin = () => {
+//     setIsAuthenticated(true);
+//   };
+
 //   return (
 //     <Router>
 //       <div className="App">
-//         <div className="toggle-container" onClick={toggleSwitch}>
-//           <div className={`toggle-btn ${isLogin ? 'left' : 'right'}`}>
-//             {isLogin ? 'Login' : 'Register'}
+//         {!isAuthenticated && (
+//           <div className="toggle-container" onClick={toggleSwitch}>
+//             <div className={`toggle-btn ${isLogin ? 'left' : 'right'}`}>
+//               {isLogin ? 'Login' : 'Register'}
+//             </div>
+//             <div className="toggle-label left">Login</div>
+//             <div className="toggle-label right">Register</div>
 //           </div>
-//           <div className="toggle-label left">Login</div>
-//           <div className="toggle-label right">Register</div>
-//         </div>
+//         )}
 
 //         <Routes>
 //           <Route
 //             path="/"
 //             element={
 //               isLogin ? (
-//                 <LoginForm />
+//                 <LoginForm onLogin={handleLogin} />
 //               ) : (
 //                 <div>
 //                   <select
@@ -57,27 +66,27 @@
 
 // export default App;
 
-
-
-// App.js
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './components/FormStyles.css';
 import RegistrationForm from './components/RegistrationForm';
 import LoginForm from './components/LoginForm';
 import Dashboard from './components/Dashboard';
+import DashboardDoctor from './components/DashboardDoctor';  // Make sure this component is imported
 
 function App() {
   const [isLogin, setIsLogin] = useState(true);
   const [role, setRole] = useState('patient');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userRole, setUserRole] = useState(''); // Store logged-in user's role here
 
   const toggleSwitch = () => {
     setIsLogin(!isLogin);
   };
 
-  const handleLogin = () => {
+  const handleLogin = (role) => {
     setIsAuthenticated(true);
+    setUserRole(role); // Store the role on login
   };
 
   return (
@@ -98,7 +107,9 @@ function App() {
             path="/"
             element={
               isLogin ? (
-                <LoginForm onLogin={handleLogin} />
+                <LoginForm
+                  onLogin={(role) => handleLogin(role)} // Pass role to handleLogin
+                />
               ) : (
                 <div>
                   <select
@@ -114,7 +125,14 @@ function App() {
               )
             }
           />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/dashboard"
+            element={<Dashboard />}
+          />
+          <Route
+            path="/dashboarddoctor"
+            element={<DashboardDoctor />} 
+          />
         </Routes>
       </div>
     </Router>
@@ -122,4 +140,3 @@ function App() {
 }
 
 export default App;
-

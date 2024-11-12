@@ -1,5 +1,6 @@
 
 // LoginForm.js
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -13,30 +14,77 @@ function LoginForm({ onLogin }) {
   const [success, setSuccess] = useState(null);
   const navigate = useNavigate();
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setError(null);
+  //   setSuccess(null);
+
+  //   const apiUrl = role === 'doctor'
+  //     ? 'http://localhost:5000/doctors/login'
+  //     : 'http://localhost:5000/patients/login';
+
+  //   try {
+  //     const response = await axios.post(apiUrl, { email, password });
+  //     console.log(response);
+  //     if (response.status === 200) {
+  //       setSuccess('Login successful!');
+  //       onLogin();
+  //       localStorage.setItem('patient_id', response.data.id);
+  //       localStorage.setItem('token', response.data.token);
+
+  //       // Navigate to different dashboards based on the role
+  //       if (role === 'patient') {
+  //         navigate('/dashboard', { state: { role, token: response.data.token, patient_id: response.data.id } });
+  //       } else if (role === 'doctor') {
+  //         navigate('/dashboarddoctor', { state: { role, token: response.data.token, doctor_id: response.data.id } });
+  //       }
+  //     }
+  //   } catch (error) {
+  //     setError('Login failed. Please check your credentials and try again.');
+  //   }
+  // };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
-
+  
     const apiUrl = role === 'doctor'
       ? 'http://localhost:5000/doctors/login'
       : 'http://localhost:5000/patients/login';
-
+  
     try {
       const response = await axios.post(apiUrl, { email, password });
-      console.log(response)
+      console.log(response);
       if (response.status === 200) {
         setSuccess('Login successful!');
         onLogin();
-        localStorage.setItem('patient_id', response.data.id)
-        localStorage.setItem('token', response.data.token)
-        navigate('/dashboard', { state: { role, token: response.data.token } });
+  
+        // Store the appropriate id based on the role
+        if (role === 'patient') {
+          localStorage.setItem('patient_id', response.data.id);
+          localStorage.removeItem('doctor_id'); // Remove any previous doctor_id from localStorage
+        } else if (role === 'doctor') {
+          localStorage.setItem('doctor_id', response.data.id);
+          localStorage.removeItem('patient_id'); // Remove any previous patient_id from localStorage
+        }
+        
+        // Store the token
+        localStorage.setItem('token', response.data.token);
+  
+        // Navigate based on the role
+        if (role === 'patient') {
+          navigate('/dashboard', { state: { role, token: response.data.token, patient_id: response.data.id } });
+        } else if (role === 'doctor') {
+          navigate('/dashboarddoctor', { state: { role, token: response.data.token, doctor_id: response.data.id } });
+        }
       }
     } catch (error) {
       setError('Login failed. Please check your credentials and try again.');
     }
   };
-
+  
   return (
     <form onSubmit={handleSubmit}>
       <h2>Login</h2>
@@ -72,3 +120,4 @@ function LoginForm({ onLogin }) {
 }
 
 export default LoginForm;
+
