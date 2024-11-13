@@ -73,6 +73,7 @@ import RegistrationForm from './components/RegistrationForm';
 import LoginForm from './components/LoginForm';
 import Dashboard from './components/Dashboard';
 import DashboardDoctor from './components/DashboardDoctor';  // Make sure this component is imported
+import EmailVerification from './components/VerifyEmail';
 
 function App() {
   const [isLogin, setIsLogin] = useState(true);
@@ -133,8 +134,12 @@ function App() {
             path="/dashboarddoctor"
             element={<DashboardDoctor />} 
           />
+                <Route path="/verify-email/:token" element={<EmailVerification />} />
+
         </Routes>
+        
       </div>
+      
     </Router>
   );
 }

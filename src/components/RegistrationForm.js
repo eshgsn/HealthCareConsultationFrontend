@@ -2,6 +2,8 @@
 
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import axios from 'axios';
 import './FormStyles.css';
 
@@ -17,6 +19,8 @@ function RegistrationForm({ role }) {
 
   const [error, setError] = useState(null); 
   const [success, setSuccess] = useState(null); 
+  const navigate = useNavigate();
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -40,6 +44,8 @@ function RegistrationForm({ role }) {
       const response = await axios.post(apiUrl, submissionData);
       if (response.status === 200) {
         setSuccess('Registration successful!');
+        alert('Registration successful! Please verify your email.');
+        navigate('/verify-email')
         // Reset the form fields after successful submission
         setFormData({
           name: '',
