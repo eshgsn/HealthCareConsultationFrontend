@@ -38,7 +38,7 @@
 }
 
 .list-container {
-  background-color: rgba(75, 145, 226, 0.596);; 
+  background-color: rgba(75, 145, 226, 0.596);
   padding: 20px;
   border-radius: 8px;
   margin-top: 15px;
@@ -75,4 +75,58 @@
 
 .consult-btn:hover {
   background-color: rgb(2, 117, 2);
+}
+
+
+
+h2 {
+  position: top;
+  color: rgb(2, 1, 1);
+  padding: 10px 0;
+  top:70px;
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.status-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center; /* Centers the cards */
+  margin-top: 20px;
+}
+
+.status-item {
+  background-color: #f9f9f9;
+  border: 1px solid rgba(75, 145, 226, 0.596);
+  border-radius: 8px;
+  padding: 15px;
+  width: 300px; /* Ensures 3 cards per row */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.status-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.status-item h3 {
+  font-size: 18px;
+  color: #4b91e2;
+  margin-bottom: 10px;
+}
+
+.status-item p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Utility for no data */
+.status-list p {
+  font-size: 18px;
+  color: black;
+  text-align: center;
+  width: 100%;
 }
