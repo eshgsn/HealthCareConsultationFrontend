@@ -1,36 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
 
 const EmailVerification = () => {
   const [error, setError] = useState(null);
   const [isVerified, setIsVerified] = useState(false);
   const navigate = useNavigate();
-  const { token } = useParams();  // Extract token from the URL parameter
+  const { token } = useParams(); // Extract token from the URL parameter
 
   useEffect(() => {
     const verifyEmail = async () => {
-      console.log('Token:', token); // Log the token to ensure it's extracted correctly.
-
       if (!token) {
         setError('Verification token is missing.');
-        console.log('No token found in URL.'); // Log if token is missing
+        console.log('No token found.');
         return;
       }
 
       try {
-        console.log('Sending request to backend...');
-        
-        const response = await axios.get(`http://localhost:5000/doctors/verify-email/${token}`);
-        console.log('Backend response:', response.data); // Log the response from the backend
+        // Decode the JWT token to get the role
+        const decodedToken = jwtDecode(token);
+        console.log('Decoded Token:', decodedToken); // Log the decoded token to check its contents
 
-        if (response.status === 200) {
-          setIsVerified(true);
-          console.log('Email verified successfully. Redirecting to login...');
-          setTimeout(() => {
-            console.log('Navigating to login page...');
-            navigate('/'); // Redirect to login after successful verification
-          }, 3000); // Wait 3 seconds before redirecting
+        const userRole = decodedToken.role; // Extract the role from the decoded token
+        console.log('User Role:', userRole); // Log the role to ensure it's correct
+
+        // Call the appropriate API based on the role (doctor or patient)
+        if (userRole === 'doctor') {
+          // Doctor verification
+          const response = await axios.get(`http://localhost:5000/doctors/verify-email/${token}`);
+          if (response.status === 200) {
+            setIsVerified(true);
+            setTimeout(() => {
+              navigate('/login'); // Redirect to login after successful verification
+            }, 3000);
+          }
+        } else if (userRole === 'patient') {
+          // Patient verification
+          const response = await axios.get(`http://localhost:5000/patients/verify-email/${token}`);
+          if (response.status === 200) {
+            setIsVerified(true);
+            setTimeout(() => {
+              navigate('/login'); // Redirect to login after successful verification
+            }, 3000);
+          }
+        } else {
+          setError('Invalid user role.');
         }
       } catch (error) {
         console.error('Verification error:', error.response ? error.response.data : error.message);

@@ -30,7 +30,7 @@ function ConsultForm({ token, patientId, doctorId, onClose }) {
         }
       );
       
-      console.log('Consultation request created:', response.data);
+      // console.log('Consultation request created:', response.data);
       alert('Consultation request created successfully!');
       onClose();
     } catch (error) {

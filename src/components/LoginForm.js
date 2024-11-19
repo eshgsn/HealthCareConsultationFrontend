@@ -56,7 +56,7 @@ function LoginForm({ onLogin }) {
   
     try {
       const response = await axios.post(apiUrl, { email, password });
-      console.log(response);
+      // console.log(response);
       if (response.status === 200) {
         setSuccess('Login successful!');
         onLogin();
