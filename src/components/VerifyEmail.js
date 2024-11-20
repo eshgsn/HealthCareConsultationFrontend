@@ -1,3 +1,106 @@
+// import React, { useState, useEffect } from 'react';
+// import { useLocation, useNavigate, useParams } from 'react-router-dom';
+// import axios from 'axios';
+// import { ToastContainer, toast } from 'react-toastify'; 
+// import './EmailVerification.css';  
+
+// const EmailVerification = () => {
+//   const [loading, setLoading] = useState(true);
+//   const [isVerified, setIsVerified] = useState(false);
+//   const [error, setError] = useState(null);
+//   const location = useLocation();
+//   const navigate = useNavigate();
+//   const queryParams = new URLSearchParams(location.search);
+//   const token = queryParams.get('token');
+//   const code = queryParams.get('code');
+
+//   // Function to verify email
+//   const verifyEmail = async () => {
+//     // console.log('Token:', token);  // Debugging log
+//     // console.log('Code:', code);    // Debugging log
+
+//     if (!token) {
+//       setError('Verification token is missing.');
+//       setLoading(false);
+//       return;
+//     }
+
+//     try {
+//       // Check user role based on the code
+//       let userRole = 'doctor';  
+//       if (code === 'patient') {
+//         userRole = 'patient';  
+//       }
+
+//       // Call the API for email verification
+//       const response = await axios.post(`http://localhost:5000/${userRole}s/verify-email?token=${token}`);
+//       console.log(response);
+//       if (response.status === 200) {  
+//         setIsVerified(true);
+//         setTimeout(() => {
+//           toast.success('Email verified successfully!');
+//           navigate('/'); 
+//         }, 1500);
+//       } else {
+//         toast.error('Email verification failed.');
+//       }
+//     } catch (err) {
+//       // console.error(err);
+//       // toast.error(err.response?.data?.message || 'Verification failed.');
+//       // setError('An error occurred while verifying the email', err);
+//       setError('An error occurred while verifying the email: ' + err.message);
+
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+ 
+//   useEffect(() => {
+//     if (token) {
+//       verifyEmail(); 
+//     } else {
+//       setLoading(false);
+//       setError('Token not found in the URL.');
+//     }
+//   }, [location, token, code]);
+
+//   return (
+//     <div className="verification-container">
+//       <ToastContainer /> 
+      
+//       {loading ? (
+//         <div className="loading">
+//           <div className="spinner"></div>
+//           <h3>Verifying your email...</h3>
+//         </div>
+//       ) : error ? (
+//         <div className="error">
+//           <h3>{error}</h3>
+//         </div>
+//       ) : (
+//         <div className="verification-message">
+//           {isVerified ? (
+//             <div className="success">
+//               <h3>Your email has been verified successfully!</h3>
+//               <p>You will be redirected shortly...</p>
+//             </div>
+//           ) : (
+//             <div className="error">
+//               <h3>Email verification failed.</h3>
+//               <p>Please try again later or contact support if the issue persists.</p>
+//             </div>
+//           )}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default EmailVerification;
+
+
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -32,7 +135,7 @@ const EmailVerification = () => {
           if (response.status === 200) {
             setIsVerified(true);
             setTimeout(() => {
-              navigate('/login'); // Redirect to login after successful verification
+              navigate('/'); // Redirect to login after successful verification
             }, 3000);
           }
         } else if (userRole === 'patient') {
@@ -41,7 +144,7 @@ const EmailVerification = () => {
           if (response.status === 200) {
             setIsVerified(true);
             setTimeout(() => {
-              navigate('/login'); // Redirect to login after successful verification
+              navigate('/'); // Redirect to login after successful verification
             }, 3000);
           }
         } else {
