@@ -110,7 +110,7 @@ const EmailVerification = () => {
   const [error, setError] = useState(null);
   const [isVerified, setIsVerified] = useState(false);
   const navigate = useNavigate();
-  const { token } = useParams(); // Extract token from the URL parameter
+  const { token } = useParams(); 
 
   useEffect(() => {
     const verifyEmail = async () => {

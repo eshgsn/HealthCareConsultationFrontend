@@ -1,77 +1,256 @@
 /* General Card Layout Styling */
 .consultation-requests {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
-    gap: 20px;
-    padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+  gap: 20px;
+  padding: 20px;
+}
+
+.consultation-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  padding: 16px;
+}
+
+.consultation-image {
+  width: 100%;
+  height: 180px; /* Adjusted height */
+  object-fit: cover; /* Ensures the image covers the area without stretching */
+  border-radius: 8px;
+}
+
+.consultation-details {
+  margin-top: 12px;
+}
+
+h3, p {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Responsive Styling */
+@media (max-width: 1024px) {
+  .consultation-requests {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium screens */
   }
-  
+}
+
+@media (max-width: 768px) {
+  .consultation-requests {
+    grid-template-columns: 1fr; /* 1 card per row on small screens */
+  }
+
   .consultation-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: center;
-    padding: 16px;
+    padding: 12px;
   }
-  
+
   .consultation-image {
-    width: 100%;
-    height: 180px; /* Adjusted height */
-    object-fit: cover; /* Ensures the image covers the area without stretching */
-    border-radius: 8px;
+    height: 150px;
   }
-  
-  .consultation-details {
-    margin-top: 12px;
-  }
-  
+
   h3, p {
-    margin: 8px 0;
-    font-size: 14px;
-    color: #333;
+    font-size: 13px;
   }
-  
-  button {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 12px;
+}
+
+/* Styling for horizontal form */
+.horizontal-form {
+  display: flex;
+  gap: 15px;
+  /* align-items: center; */
+  width: 900px; 
+  max-width: 1000px; 
+  margin: 0 auto;
+  margin-top: 20px; /* Space between heading and form */
+}
+
+.horizontal-form input {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%; /* Ensure the inputs expand to fill the container */
+  box-sizing: border-box; /* Prevents padding from affecting width */
+}
+
+.confirm-button {
+  padding: 10px 15px;
+  background-color: #0388fc;
+  margin-bottom: 25px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.confirm-button:hover {
+  background-color: #026dc3;
+}
+/* General Card Layout Styling */
+.consultation-requests {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+  gap: 20px;
+  padding: 20px;
+}
+
+.consultation-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  padding: 16px;
+}
+
+.consultation-image {
+  width: 100%;
+  height: 180px; /* Adjusted height */
+  object-fit: cover; /* Ensures the image covers the area without stretching */
+  border-radius: 8px;
+}
+
+.consultation-details {
+  margin-top: 12px;
+}
+
+h3, p {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Responsive Styling */
+@media (max-width: 1024px) {
+  .consultation-requests {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium screens */
   }
-  
-  button:hover {
-    background-color: #45a049;
+}
+
+@media (max-width: 768px) {
+  .consultation-requests {
+    grid-template-columns: 1fr; /* 1 card per row on small screens */
   }
-  
-  /* Responsive Styling */
-  @media (max-width: 1024px) {
-    .consultation-requests {
-      grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium screens */
-    }
+
+  .consultation-card {
+    padding: 12px;
   }
-  
-  @media (max-width: 768px) {
-    .consultation-requests {
-      grid-template-columns: 1fr; /* 1 card per row on small screens */
-    }
-  
-    .consultation-card {
-      padding: 12px;
-    }
-  
-    .consultation-image {
-      height: 150px;
-    }
-  
-    h3, p {
-      font-size: 13px;
-    }
+
+  .consultation-image {
+    height: 150px;
   }
-  
+
+  h3, p {
+    font-size: 13px;
+  }
+}
+
+/* Styling for horizontal form */
+.horizontal-form {
+  display: flex;
+  gap: 15px;
+  /* align-items: center; */
+  width: 900px; 
+  max-width: 1000px; 
+  margin: 0 auto;
+  margin-top: 20px; /* Space between heading and form */
+}
+
+.horizontal-form input {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%; /* Ensure the inputs expand to fill the container */
+  box-sizing: border-box; /* Prevents padding from affecting width */
+}
+
+.confirm-button {
+  padding: 10px 15px;
+  background-color: #0388fc;
+  margin-bottom: 25px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.confirm-button:hover {
+  background-color: #026dc3;
+}
+
+.timeslot-form {
+  margin-top: -300px; 
+  padding-top: 0;
+  position: relative; 
+}
+
+
+/* h1 {
+  text-align: left; 
+  margin-top: 0; 
+}
+
+h3 {
+  text-align: left; 
+  margin-top: 10px; 
+} */
+
+.timeslot-form {
+  margin-top: 100px; 
+  padding-top: 0;
+  position: relative; 
+}
+
+
+/* h1 {
+  text-align: left; 
+  margin-top: 0; 
+}
+
+h3 {
+  text-align: left; 
+  margin-top: 10px; 
+} */

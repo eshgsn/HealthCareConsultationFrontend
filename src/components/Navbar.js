@@ -35,7 +35,10 @@ function Navbar({ onLogout, onSelect, userRole }) {
         <div className="navbar-title">Skincare Platform</div>
         <ul className="navbar-links">
           {userRole === 'doctor' ? (
+            <>
             <li onClick={() => onSelect('consultationRequests')}>Consultation Requests</li>
+            <li onClick={() => onSelect('timeslots')}>TimeSlot</li>
+            </>
           ) : (
             <>
               <li onClick={() => onSelect('findDoctor')}>Find a Doctor</li>
