@@ -254,10 +254,10 @@ function DashboardDoctor() {
   };
 
   const handleLogout = () => {
-    // Implement logout logic here (e.g., clear localStorage, navigate to login page)
+    
     localStorage.removeItem('token');
     localStorage.removeItem('doctor_id');
-    window.location.href = '/'; // Redirect to login page (you can change this as per your routing setup)
+    window.location.href = '/'; 
   };
 
   const handleStatusChange = (id, status) => {
@@ -292,14 +292,14 @@ function DashboardDoctor() {
           },
         })
         .then((response) => {
-          setConsultationRequests(response.data); // Set the data from the response
+          setConsultationRequests(response.data); 
         })
         .catch((error) => {
           console.error("Error fetching consultation requests:", error);
-          setConsultationRequests([]); // Reset data if there's an error
+          setConsultationRequests([]); 
         });
     }
-  }, [selectedSection, doctorId, token]); // Dependency array ensures API call when section is changed
+  }, [selectedSection, doctorId, token]); 
 
   return (
     <div>
@@ -319,7 +319,7 @@ function DashboardDoctor() {
         {selectedSection === 'consultationRequests' && (
           <div>
             <h2>Consultation Requests</h2>
-            {/* Display Consultation Requests as Cards */}
+          
             <div className="consultation-requests">
               {consultationRequests.length > 0 ? (
                 consultationRequests.map((request) => (
@@ -335,7 +335,6 @@ function DashboardDoctor() {
                       <p>Description: {request.description}</p>
                       <p>Status: {request.status}</p>
 
-                      {/* Buttons based on status */}
                       {request.status === 'Pending' && (
                         <div>
                           <button onClick={() => handleStatusChange(request.id, 'Accepted')}>Accept</button>

@@ -76,7 +76,7 @@
 //   const [error, setError] = useState(null);
 //   const [success, setSuccess] = useState(null);
 
- 
+
 //   const handleInputChange = (e) => {
 //     const { name, value } = e.target;
 //     setFormData((prevState) => ({
@@ -109,11 +109,11 @@
 //       );
 //       console.log('API Response:', response.data);
 
-     
+
 //       setSuccess('Timeslot created successfully!');
 //       setError(null);
 
-      
+
 //       setFormData({
 //         date: '',
 //         startTime: '',
@@ -174,12 +174,14 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import './TimeslotStyles.css'; 
+import './TimeslotStyles.css';
 
 function TimeslotForm({ formData, setFormData }) {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [timeslots, setTimeslots] = useState([]);
+  const [editingTimeslot, setEditingTimeslot] = useState(null);
+
 
   const doctorId = localStorage.getItem('doctor_id');
 
@@ -236,16 +238,66 @@ function TimeslotForm({ formData, setFormData }) {
     }
   };
 
-  const handleDelete = async (id) => {
+  // const handleDelete = async (id) => {
+  //   try {
+  //     await axios.delete(`http://localhost:5000/api/time-slots/${id}`);
+  //     setSuccess('Timeslot deleted successfully!');
+  //     fetchTimeslots();
+  //   } catch (error) {
+  //     console.error('Error deleting timeslot:', error);
+  //     setError('Failed to delete timeslot.');
+  //   }
+  // };
+
+  const handleDelete = async (timeSlotId) => {
+    if (!doctorId) {
+      setError('Doctor ID not found in local storage.');
+      return;
+    }
+
     try {
-      await axios.delete(`http://localhost:5000/api/time-slots/${id}`);
+      await axios.delete(`http://localhost:5000/api/time-slots/${doctorId}/${timeSlotId}`);
       setSuccess('Timeslot deleted successfully!');
-      fetchTimeslots();
+      setError(null);
+      fetchTimeslots(); // Refresh the list of timeslots
     } catch (error) {
       console.error('Error deleting timeslot:', error);
       setError('Failed to delete timeslot.');
     }
   };
+
+  const handleUpdate = async (timeSlotId, updatedSlot) => {
+    if (!doctorId) {
+      setError('Doctor ID not found in local storage.');
+      return;
+    }
+
+    try {
+      await axios.put(`http://localhost:5000/api/time-slots/${doctorId}/${timeSlotId}`, {
+        date: updatedSlot.date,
+        startTime: updatedSlot.startTime,
+        endTime: updatedSlot.endTime,
+        isAvailable: updatedSlot.isAvailable,
+      });
+      setSuccess('Timeslot updated successfully!');
+      setError(null);
+      fetchTimeslots(); // Refresh the list of timeslots
+    } catch (error) {
+      console.error('Error updating timeslot:', error);
+      setError('Failed to update timeslot.');
+    }
+  };
+
+  const handleEditClick = (timeslot) => {
+    setEditingTimeslot(timeslot.id); // Set the timeslot being edited
+  };
+
+  const handleSaveClick = async (timeSlotId, updatedSlot) => {
+    await handleUpdate(timeSlotId, updatedSlot); // Call the update function
+    setEditingTimeslot(null); // Exit edit mode
+  };
+  
+
 
   return (
     <div className="timeslot-form-container">
@@ -285,14 +337,27 @@ function TimeslotForm({ formData, setFormData }) {
         </form>
       </div>
 
-      <div className="timeslot-grid">
+      {/* <div className="timeslot-grid">
         {timeslots.length > 0 ? (
           timeslots.map((slots) => (
             <div className="timeslot-card" key={slots.id}>
               <p><strong>Date:</strong> {slots.date}</p>
               <p><strong>Start Time:</strong> {slots.startTime}</p>
               <p><strong>End Time:</strong> {slots.endTime}</p>
-              <button className="update-button">Update</button>
+              <button
+                className="update-button"
+                onClick={() =>
+                  handleUpdate(slots.id, {
+                    date: '2024-11-30', // Replace with actual form data
+                    startTime: '09:00',
+                    endTime: '10:00',
+                    isAvailable: true,
+                  })
+                }
+              >
+                Update
+              </button>
+
               <button className="delete-button" onClick={() => handleDelete(slots.id)}>
                 Delete
               </button>
@@ -301,7 +366,92 @@ function TimeslotForm({ formData, setFormData }) {
         ) : (
           <p>No timeslots available.</p>
         )}
+      </div> */}
+      <div className="timeslot-grid">
+  {timeslots.length > 0 ? (
+    timeslots.map((timeslot) => (
+      <div className="timeslot-card" key={timeslot.id}>
+        {editingTimeslot === timeslot.id ? (
+          // Render the edit form
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSaveClick(timeslot.id, {
+                date: formData.date,
+                startTime: formData.startTime,
+                endTime: formData.endTime,
+                isAvailable: true,
+              });
+            }}
+          >
+            <input
+              type="date"
+              name="date"
+              defaultValue={timeslot.date}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, date: e.target.value }))
+              }
+            />
+            <input
+              type="time"
+              name="startTime"
+              defaultValue={timeslot.startTime}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, startTime: e.target.value }))
+              }
+            />
+            <input
+              type="time"
+              name="endTime"
+              defaultValue={timeslot.endTime}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, endTime: e.target.value }))
+              }
+            />
+            <button type="submit" className="save-button">
+              Save
+            </button>
+            <button
+              type="button"
+              className="cancel-button"
+              onClick={() => setEditingTimeslot(null)}
+            >
+              Cancel
+            </button>
+          </form>
+        ) : (
+          // Render the default view
+          <>
+            <p>
+              <strong>Date:</strong> {timeslot.date}
+            </p>
+            <p>
+              <strong>Start Time:</strong> {timeslot.startTime}
+            </p>
+            <p>
+              <strong>End Time:</strong> {timeslot.endTime}
+            </p>
+            <button
+              className="update-button"
+              onClick={() => handleEditClick(timeslot)}
+            >
+              Update
+            </button>
+            <button
+              className="delete-button"
+              onClick={() => handleDelete(timeslot.id)}
+            >
+              Delete
+            </button>
+          </>
+        )}
       </div>
+    ))
+  ) : (
+    <p>No timeslots available.</p>
+  )}
+</div>
+
     </div>
   );
 }
