@@ -35,6 +35,7 @@
 /* DashboardStyles.css */
 .dashboard {
   padding: 20px;
+  
 }
 
 .list-container {
@@ -86,6 +87,8 @@ h2 {
   top:70px;
   margin: 0;
   font-size: 1.5em;
+  padding-top: 50px
+  
 }
 
 .status-list {

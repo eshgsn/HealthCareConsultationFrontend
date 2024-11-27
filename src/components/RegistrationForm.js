@@ -1,4 +1,4 @@
-// // RegistrationForm.js
+// RegistrationForm.js
 
 
 import React, { useState } from 'react';

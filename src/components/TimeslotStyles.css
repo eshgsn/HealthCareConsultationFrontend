@@ -47,7 +47,8 @@
     flex-direction: column;
     gap: 5px;
     width: 200px;
-    height: 200px;
+    /* height: 200px; */
+    height:250px;
   }
   
   .timeslot-card button {

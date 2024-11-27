@@ -1,7 +1,8 @@
 
    /* Navbar Container */
 .navbar {
-  position: fixed;
+  position: fixed !important;
+  /* position: fixed ; */
   top: 0;
   left: 0;
   width: 100%;
@@ -12,6 +13,7 @@
   padding: 15px 20px;
   color: white;
   z-index: 1000;
+ 
 }
 
 /* Left side of Navbar */

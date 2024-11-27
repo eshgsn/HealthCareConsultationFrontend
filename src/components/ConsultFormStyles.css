@@ -77,3 +77,16 @@
 .cancel-btn:hover {
     background-color: #c82333;
 }
+
+
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+  
+  select option {
+    padding: 8px;
+  }
+  
