@@ -1,6 +1,5 @@
 // RegistrationForm.js
 
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,8 +12,8 @@ function RegistrationForm({ role }) {
     email: '',
     password: '',
     specialization: '',
-    availability_Start: '',
-    availability_End: '',
+    // availability_Start: '',
+    // availability_End: '',
   });
 
   const [error, setError] = useState(null); 
@@ -52,8 +51,8 @@ function RegistrationForm({ role }) {
           email: '',
           password: '',
           specialization: '',
-          availability_Start: '',
-          availability_End: '',
+          // availability_Start: '',
+          // availability_End: '',
         });
       }
     } catch (error) {
@@ -106,7 +105,7 @@ function RegistrationForm({ role }) {
             required
           />
 
-          <label>Availability Start Time:</label>
+          {/* <label>Availability Start Time:</label>
           <input
             type="time"
             name="availability_Start"
@@ -122,7 +121,7 @@ function RegistrationForm({ role }) {
             value={formData.availability_End}
             onChange={handleChange}
             required
-          />
+          /> */}
         </>
       )}
 

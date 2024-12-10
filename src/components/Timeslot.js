@@ -185,6 +185,16 @@ function TimeslotForm({ formData, setFormData }) {
 
   const doctorId = localStorage.getItem('doctor_id');
 
+  // Helper function to get today's date in the format YYYY-MM-DD
+  const getTodayDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+
   const fetchTimeslots = useCallback(async () => {
     if (!doctorId) {
       console.warn('No doctorId found. Skipping fetch.');
@@ -296,7 +306,7 @@ function TimeslotForm({ formData, setFormData }) {
     await handleUpdate(timeSlotId, updatedSlot); // Call the update function
     setEditingTimeslot(null); // Exit edit mode
   };
-  
+
 
 
   return (
@@ -314,6 +324,7 @@ function TimeslotForm({ formData, setFormData }) {
             onChange={handleInputChange}
             required
             placeholder="Date"
+            min={getTodayDate()} 
           />
           <input
             type="time"
@@ -368,89 +379,89 @@ function TimeslotForm({ formData, setFormData }) {
         )}
       </div> */}
       <div className="timeslot-grid">
-  {timeslots.length > 0 ? (
-    timeslots.map((timeslot) => (
-      <div className="timeslot-card" key={timeslot.id}>
-        {editingTimeslot === timeslot.id ? (
-          // Render the edit form
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSaveClick(timeslot.id, {
-                date: formData.date,
-                startTime: formData.startTime,
-                endTime: formData.endTime,
-                isAvailable: true,
-              });
-            }}
-          >
-            <input
-              type="date"
-              name="date"
-              defaultValue={timeslot.date}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, date: e.target.value }))
-              }
-            />
-            <input
-              type="time"
-              name="startTime"
-              defaultValue={timeslot.startTime}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, startTime: e.target.value }))
-              }
-            />
-            <input
-              type="time"
-              name="endTime"
-              defaultValue={timeslot.endTime}
-              onChange={(e) =>
-                setFormData((prev) => ({ ...prev, endTime: e.target.value }))
-              }
-            />
-            <button type="submit" className="save-button">
-              Save
-            </button>
-            <button
-              type="button"
-              className="cancel-button"
-              onClick={() => setEditingTimeslot(null)}
-            >
-              Cancel
-            </button>
-          </form>
+        {timeslots.length > 0 ? (
+          timeslots.map((timeslot) => (
+            <div className="timeslot-card" key={timeslot.id}>
+              {editingTimeslot === timeslot.id ? (
+                // Render the edit form
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSaveClick(timeslot.id, {
+                      date: formData.date,
+                      startTime: formData.startTime,
+                      endTime: formData.endTime,
+                      isAvailable: true,
+                    });
+                  }}
+                >
+                  <input
+                    type="date"
+                    name="date"
+                    defaultValue={timeslot.date}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, date: e.target.value }))
+                    }
+                  />
+                  <input
+                    type="time"
+                    name="startTime"
+                    defaultValue={timeslot.startTime}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, startTime: e.target.value }))
+                    }
+                  />
+                  <input
+                    type="time"
+                    name="endTime"
+                    defaultValue={timeslot.endTime}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, endTime: e.target.value }))
+                    }
+                  />
+                  <button type="submit" className="save-button">
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    className="cancel-button"
+                    onClick={() => setEditingTimeslot(null)}
+                  >
+                    Cancel
+                  </button>
+                </form>
+              ) : (
+                // Render the default view
+                <>
+                  <p>
+                    <strong>Date:</strong> {timeslot.date}
+                  </p>
+                  <p>
+                    <strong>Start Time:</strong> {timeslot.startTime}
+                  </p>
+                  <p>
+                    <strong>End Time:</strong> {timeslot.endTime}
+                  </p>
+                  <button
+                    className="update-button"
+                    onClick={() => handleEditClick(timeslot)}
+                  >
+                    Update
+                  </button>
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDelete(timeslot.id)}
+                  >
+                    Delete
+                  </button>
+                </>
+              )}
+            </div>
+          ))
         ) : (
-          // Render the default view
-          <>
-            <p>
-              <strong>Date:</strong> {timeslot.date}
-            </p>
-            <p>
-              <strong>Start Time:</strong> {timeslot.startTime}
-            </p>
-            <p>
-              <strong>End Time:</strong> {timeslot.endTime}
-            </p>
-            <button
-              className="update-button"
-              onClick={() => handleEditClick(timeslot)}
-            >
-              Update
-            </button>
-            <button
-              className="delete-button"
-              onClick={() => handleDelete(timeslot.id)}
-            >
-              Delete
-            </button>
-          </>
+          <p>No timeslots available.</p>
         )}
       </div>
-    ))
-  ) : (
-    <p>No timeslots available.</p>
-  )}
-</div>
 
     </div>
   );
