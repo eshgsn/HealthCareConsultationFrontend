@@ -10,6 +10,7 @@
  import Dashboard from './components/Dashboard';
  import DashboardDoctor from './components/DashboardDoctor';  // Make sure this component is imported
  import EmailVerification from './components/VerifyEmail';
+import Chat from './components/Chat';
 
  
  
@@ -77,7 +78,7 @@
              element={<DashboardDoctor />} 
            />
                  <Route path="/verify-email/:token" element={<EmailVerification role={role}/> } />
- 
+            <Route path="/chatBox/:doctorId/:patientId" element={<Chat/>}/>
          </Routes>
          
        </div>

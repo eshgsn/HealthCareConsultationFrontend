@@ -134,3 +134,16 @@ h2 {
   width: 100%;
 }
 
+.chat-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.chat-btn:hover {
+  background-color: #45a049;
+}

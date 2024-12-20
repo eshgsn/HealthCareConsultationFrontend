@@ -63,9 +63,11 @@ function LoginForm({ onLogin }) {
   
         // Store the appropriate id based on the role
         if (role === 'patient') {
+          localStorage.setItem('role', 'patient');
           localStorage.setItem('patient_id', response.data.id);
           localStorage.removeItem('doctor_id'); // Remove any previous doctor_id from localStorage
         } else if (role === 'doctor') {
+          localStorage.setItem('role', 'doctor');
           localStorage.setItem('doctor_id', response.data.id);
           localStorage.removeItem('patient_id'); // Remove any previous patient_id from localStorage
         }
